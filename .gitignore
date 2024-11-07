@@ -1,0 +1,5 @@
+
+.flaskenv*
+.env
+.env.vault
+node_modules

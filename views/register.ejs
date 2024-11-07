@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/styles.css">
+    <title>Register</title>
+    <style>
+        
+body {  
+    margin: 0;  
+    font-family: Arial, sans-serif;  
+    background-color: #f4f4f4;  
+    background: url('/images/regisBack.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 740px;
+   opacity: 0.8;
+}  
+
+
+.container {  
+    max-width: 550px;  
+    margin: 50px auto;  
+    padding: 20px;  
+    background: rgb(199, 214, 243);  
+    border-radius: 8px;  
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);  
+    margin-top:10%;
+    margin-left:30%;
+   
+}  
+.user, .pass{
+    
+        display: block;
+        font-size: 1.5rem;
+        padding: 10px;
+        width: 96%;
+        margin-bottom: 10px;
+        border-radius: 9px;
+        text-align: left;
+       
+        border-bottom: 3px solid #000; 
+       
+            
+}
+
+
+
+h2 {  
+    text-align: center;  
+    color: #333;  
+    font-family: cursive;
+}  
+
+form {  
+    display: flex;  
+    flex-direction: column;  
+}  
+
+input[type="text"],  
+input[type="password"] {  
+    padding: 10px;  
+    margin: 10px 0;  
+    border: 1px solid #ccc;  
+    border-radius: 5px;  
+}  
+
+input[type="text"]:focus,  
+input[type="password"]:focus {  
+    border-color: #007BFF;  
+    outline: none;  
+}   
+
+button {  
+    padding: 20px;  
+    background-color: #78b7f1;  
+    border: none;  
+    border-radius: 8px;  
+    color: white;  
+    font-size: 20px;  
+    cursor: pointer; 
+   
+   padding: 10px;
+   align-items: center;
+}  
+
+button:hover {  
+    background-color: #4182de;  
+}  
+
+p {  
+    text-align: center;  
+}  
+
+a {  
+    color: #6535ea;  
+    text-decoration: none;  
+}  
+
+a:hover {  
+    text-decoration: underline;  
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form action="/register" method="POST">
+            <input type="text" name="username" class="user" placeholder="Username" required>
+            <input type="password" name="password" class="pass" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>
+

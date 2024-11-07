@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #a6ddf0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #b6e4ef;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-family: cursive;
+            font-size: 2rem;
+        }
+        a {
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #2ab5b2;
+            color: white;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        a:hover {
+            background-color: #206978;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+           background-color: #dbe9ee;
+            text-align: left;
+            border-radius: 8px;
+        }
+        th {
+            background-color:#8cc4f5;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #a9a7a7;
+        }
+        tr:nth-child(odd) {
+            background-color: #f4f4f4;
+        }
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        .logout-btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 5px;
+        }
+        .logout-btn:hover {
+            background-color: #6b131c;
+        }
+        .btnn {
+           display: block;
+            width: fit-content;
+           margin: 10px auto;
+            padding: 10px ;
+           
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            font-family: cursive;
+            font-size: 1rem;
+            background-color: transparent;
+        }
+        .btnn a {
+            text-decoration: none;
+           
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Patient List</h2>
+        <a href="/patients/add">Add New Patient</a>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Symptoms</th>
+                <th>Date of Visit</th>
+            </tr>
+            <% patients.forEach(patient => { %>
+            <tr>
+                <td><%= patient.name %></td>
+                <td><%= patient.age %></td>
+                <td><%= patient.gender %></td>
+                <td><%= patient.symptoms %></td>
+                <td><%= patient.dateOfVisit.toDateString() %></td>
+            </tr>
+            <% }) %>
+           
+<div style="display: flex; align-items: center;">
+    <% if (username) { %>
+        <span>Welcome, <%= username %></span>
+    <% } else { %>
+        <button class="user-btn">User</button>
+    <% } %>
+</div>
+
+        </table>
+        <a href="/logout" class="logout-btn">Logout</a>
+       <br>
+        <button class="btnn"><a href="/home">Back to Home</a></button>
+        
+    </div>
+</body>
+</html>

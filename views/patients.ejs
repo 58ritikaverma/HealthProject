@@ -1,0 +1,102 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Add Patient</title>
+    <style>
+        h2{
+            font-family: cursive;
+            text-align: center;
+
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ebe8e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #a9dde0;
+            width: 500px;
+            padding: 20px;
+            box-shadow: 0 5px 10px rgba(12, 12, 12, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: cursive;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-bottom: 15px;
+            padding: 10px;
+            outline: none;
+            font-size: 16px;
+           background-color: #a9dde0;
+            border-radius: 8px;
+            border: 2px solid #a9dde0;
+            border-bottom:2px solid #007bff;
+        }
+
+        input:focus {
+            border-color: #007bff; 
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color:white;
+            font-size: 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .dash {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .dash:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add New Patient</h2>
+        <form action="/patients/add" method="POST" >
+            <input type="text" class="pname" name="name" placeholder="Patient Name" required>
+            <input type="number" class="page" name="age" placeholder="Age" required>
+            <input type="text" class="pgender" name="gender" placeholder="Gender" required>
+            <input type="text" class="psymp" name="symptoms" placeholder="Symptoms" required>
+            <input type="date" name="dateOfVisit" required>
+            <button type="submit">Add Patient</button>
+        </form>
+        <a href="/dashboard" class="dash">Back to Dashboard</a>
+    </div>
+</body>
+</html>

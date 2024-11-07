@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Records Home</title>
+    <link rel="stylesheet" href="/public/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            padding: 0;
+        }
+   .background{
+    background: url('/images/benefits-of-a-hospital-management-system-removebg-preview.png') center/cover;
+    opacity: 0.6; 
+    position: fixed;
+    top: 30;
+    left: 0;
+    width:60%;
+    height:100%;
+    z-index: -1;
+   }
+        .header {
+            background-color: #62b3d0;
+            color: rgb(230, 235, 245);
+            padding: 8px 0;
+            text-align: center;
+            padding:20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            opacity: 0.9;
+        }
+        .header h1 {
+            margin: 0;
+            font-family: cursive;
+            text-align: center;
+            font-size: 2rem;
+            color: rgb(240, 240, 240);
+        }
+        .nav-links {
+            display: flex;
+            justify-content:right;
+            padding: 10px;
+            margin: 20px;
+            font-family: cursive;
+          
+        }
+        .nav-links a {
+            text-decoration: none;
+            padding: 15px 25px;
+            background-color: #4e9dc2;
+            color: white;
+            border-radius: 5px;
+            margin-left:10px;
+        }
+        .nav-links a:hover {
+            background-color: #2c6192;
+        }
+        .content {
+            text-align: right;
+            margin-top: 50px;
+            top:50%;
+            right:60px;
+            padding: 10px;
+        }
+        .content h2 {
+            color: #6ca6c1f7;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 70px;
+          
+        }
+        .content p {
+            font-size: 1.8rem;
+            color: #555;
+        }
+        .button{
+            align-items: end;
+            padding: 7px;
+          
+            width: 80%;
+        }
+        .b{
+            font-size: 20px;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid black;
+            border-radius: 9px;
+            font-family: cursive;
+           
+            background-color:#63aed0;
+        }
+        .b a:hover{
+            background-color: #3d78ae;
+            color: #f2f7f7;
+            text-decoration: none;
+        }
+        .reg{
+            text-decoration: none;
+            padding: 15px 25px;
+            background-color: #4e9dc2;
+            color: white;
+            border-radius: 5px;
+            margin-left:60px;
+            display: flex;
+            
+        }
+        .reg:hover{
+            background-color: #3d78ae;
+            color: #f2f7f7;
+            text-decoration: none;
+        }
+        .user-btn {
+            background-color: #f5f5f5; /* Example color */
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+        .user-btn:hover {
+            background-color: #e0e0e0; /* Example hover color */
+        }
+        
+    </style>
+</head>
+<body>
+<div class="background"></div>
+    <div class="header">
+        <h1>Welcome to Health Records Management</h1>
+        <button class="reg"><a href="/register">Register</a></button>
+        <div style="display: flex; align-items: center;">
+            <button class="register-btn">user</button>
+            <i class="fas fa-user" style="margin-left: 10px;"></i>
+        </div>
+    </div>
+        <div class="nav-links">
+           
+            <a href="/admin">Admin</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/login">Login</a>
+        </div>
+
+        <div class="content">
+            <h2>Your Health Data <br>in One Place</h2>
+        </div>
+       
+</body>
+</html>
