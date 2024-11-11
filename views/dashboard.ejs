@@ -109,7 +109,7 @@
             </tr>
             <% patients.forEach(patient => { %>
             <tr>
-                <td><%= patient.name %></td>
+                <td><%= patient.name ? patient.name:'N/A' %></td>
                 <td><%= patient.age %></td>
                 <td><%= patient.gender %></td>
                 <td><%= patient.symptoms %></td>
@@ -118,7 +118,7 @@
             <% }) %>
            
 <div style="display: flex; align-items: center;">
-    <% if (username) { %>
+    <% if (username ) { %>
         <span>Welcome, <%= username %></span>
     <% } else { %>
         <button class="user-btn">User</button>
@@ -126,7 +126,7 @@
 </div>
 
         </table>
-        <a href="/logout" class="logout-btn">Logout</a>
+        <!-- <a href="/logout" class="logout-btn">Logout</a> -->
        <br>
         <button class="btnn"><a href="/home">Back to Home</a></button>
         

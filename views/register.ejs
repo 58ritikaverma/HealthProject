@@ -8,29 +8,27 @@
     <title>Register</title>
     <style>
         
-body {  
+ body {  
     margin: 0;  
     font-family: Arial, sans-serif;  
     background-color: #f4f4f4;  
     background: url('/images/regisBack.jpg');
     background-repeat: no-repeat;
     background-size: 100% 740px;
-   opacity: 0.8;
+   opacity: 0.95;
 }  
-
-
 .container {  
     max-width: 550px;  
-    margin: 50px auto;  
-    padding: 20px;  
+    margin: 10px ;  
+    padding: 10px;  
     background: rgb(199, 214, 243);  
     border-radius: 8px;  
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);  
-    margin-top:10%;
+    margin-top:2%;
     margin-left:30%;
    
 }  
-.user, .pass{
+.user, .pass ,.name, .age, .phone, .address{
     
         display: block;
         font-size: 1.5rem;
@@ -44,9 +42,6 @@ body {
        
             
 }
-
-
-
 h2 {  
     text-align: center;  
     color: #333;  
@@ -59,7 +54,8 @@ form {
 }  
 
 input[type="text"],  
-input[type="password"] {  
+input[type="password"],
+input[type="number"] {  
     padding: 10px;  
     margin: 10px 0;  
     border: 1px solid #ccc;  
@@ -67,10 +63,12 @@ input[type="password"] {
 }  
 
 input[type="text"]:focus,  
-input[type="password"]:focus {  
-    border-color: #007BFF;  
-    outline: none;  
-}   
+        input[type="password"]:focus, 
+        input[type="number"]:focus, 
+        textarea:focus {  
+            border-color: #007BFF;  
+            outline: none;  
+        } 
 
 button {  
     padding: 20px;  
@@ -106,7 +104,16 @@ a:hover {
 <body>
     <div class="container">
         <h2>Register</h2>
+        <!-- <form action="/register" method="POST">
+            <input type="text" name="username" class="user" placeholder="Username" required>
+            <input type="password" name="password" class="pass" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>  -->
         <form action="/register" method="POST">
+            <input type="text" name="name" class="name" placeholder="Full Name" required>
+            <input type="number" name="age" class="age" placeholder="Age" required>
+            <input type="text" name="phone" class="phone" pattern="\d{10}" placeholder="Phone Number" required>
+            <textarea name="address" class="address" placeholder="Address" rows="4" required></textarea>
             <input type="text" name="username" class="user" placeholder="Username" required>
             <input type="password" name="password" class="pass" placeholder="Password" required>
             <button type="submit">Register</button>

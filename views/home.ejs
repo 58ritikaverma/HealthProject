@@ -13,140 +13,259 @@
             background-color: #f6f6f6;
             margin: 0;
             padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
-   .background{
-    background: url('/images/benefits-of-a-hospital-management-system-removebg-preview.png') center/cover;
-    opacity: 0.6; 
-    position: fixed;
-    top: 30;
-    left: 0;
-    width:60%;
-    height:100%;
-    z-index: -1;
-   }
+
+        .background {
+            background: url('/images/benefits-of-a-hospital-management-system-removebg-preview.png');
+            background-size: cover; 
+            opacity: 0.9;
+          
+           background-position: center;  
+           width: 50%;  
+           height: 500px; 
+           margin-top: 20px; 
+           position: absolute;  
+           top: 170px; 
+           left: 10%;
+           z-index: -1;
+        }
+
         .header {
-            background-color: #62b3d0;
+            background-color: #74b6ce;
             color: rgb(230, 235, 245);
-            padding: 8px 0;
+            padding: 5px 0;
             text-align: center;
-            padding:20px;
+            padding: 20px;
             display: flex;
             justify-content: space-around;
-            align-items: center;
-            opacity: 0.9;
+            align-items:center;
+            
         }
+
         .header h1 {
             margin: 0;
             font-family: cursive;
-            text-align: center;
+            text-align: left;
             font-size: 2rem;
-            color: rgb(240, 240, 240);
+            color: rgb(255, 255, 255);
+            font-weight: 500;
         }
+
         .nav-links {
             display: flex;
-            justify-content:right;
+            justify-content: right;
             padding: 10px;
-            margin: 20px;
+            margin: 20px 0;
             font-family: cursive;
-          
         }
+
         .nav-links a {
             text-decoration: none;
             padding: 15px 25px;
-            background-color: #4e9dc2;
-            color: white;
+            /* background-color: #4e9dc2; */
+            color: rgb(29, 28, 28);
             border-radius: 5px;
-            margin-left:10px;
+            margin-left: 10px;
+            font-family:cursive;
+            font-weight:600;
+            font-size: 20px;
         }
+
         .nav-links a:hover {
-            background-color: #2c6192;
+            background-color: #62b3d0;
         }
+
         .content {
-            text-align: right;
+            text-align:end;
             margin-top: 50px;
-            top:50%;
-            right:60px;
-            padding: 10px;
+            padding: 20px;
         }
+
         .content h2 {
-            color: #6ca6c1f7;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            font-size: 70px;
-          
+            color: #262829f7;
+            font-family: cursive;
+            font-size: 40px;
+           font-weight: 500;
         }
+        
         .content p {
             font-size: 1.8rem;
             color: #555;
         }
-        .button{
+
+        .button {
             align-items: end;
             padding: 7px;
-          
             width: 80%;
         }
-        .b{
+
+        .b {
             font-size: 20px;
             text-align: center;
             padding: 10px;
             border: 2px solid black;
             border-radius: 9px;
             font-family: cursive;
-           
-            background-color:#63aed0;
+            background-color: #63aed0;
         }
-        .b a:hover{
+
+        .b a:hover {
             background-color: #3d78ae;
             color: #f2f7f7;
             text-decoration: none;
         }
-        .reg{
+
+        .reg {
             text-decoration: none;
             padding: 15px 25px;
             background-color: #4e9dc2;
             color: white;
             border-radius: 5px;
-            margin-left:60px;
+            margin-left: 60px;
             display: flex;
-            
         }
-        .reg:hover{
+
+        .reg a {
+            display: block;
+            color: inherit;
+        }
+
+        .reg:hover {
             background-color: #3d78ae;
             color: #f2f7f7;
             text-decoration: none;
         }
+
         .user-btn {
-            background-color: #f5f5f5; /* Example color */
+            background-color: #f5f5f5;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
+
         }
-        
+
         .user-btn:hover {
-            background-color: #e0e0e0; /* Example hover color */
+            background-color: #e0e0e0;
+        }
+
+        /* Styling for the About Section */
+        .about {
+            background-color: #c5ddf1;
+            padding: 50px;
+            margin:70px 10px;
+            margin-top: 250px;
+            display: none; 
+            transition: transform 0.6s ease-in;
+            transform: translateY(0); /* Position off-screen initially */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .about.show {
+            display: block;
+           /* padding:40px;
+            text-align: justify;
+            font-size: 1.5rem;*/
+          
+            /* transform: translateY(0);  */
+        }
+        .about p {
+            font-size: 1.2rem;
+            letter-spacing: 0.05em; 
+            text-align: justify;
         }
         
+        .about h2{
+            font-family: cursive;
+            font-size: 2rem;
+            text-align: center;
+        }
+        .btn{
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #d8915f;
+            color: rgb(25, 22, 22);
+            border-radius: 5px;
+            margin-left: 10px;
+            font-family:cursive;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        .btn:hover{
+            background-color: #8a5936;
+        }
+        .register-btn{
+            text-decoration: none;
+            padding: 10px 15px;
+            /* background-color: #4e9dc2; */
+            color: rgb(29, 28, 28);
+            border-radius: 5px;
+            margin-left: 5px;
+            font-family:cursive;
+            font-weight:500;
+            font-size: 20px;
+        
+
+        }
+       
     </style>
 </head>
 <body>
-<div class="background"></div>
-    <div class="header">
-        <h1>Welcome to Health Records Management</h1>
-        <button class="reg"><a href="/register">Register</a></button>
-        <div style="display: flex; align-items: center;">
-            <button class="register-btn">user</button>
-            <i class="fas fa-user" style="margin-left: 10px;"></i>
-        </div>
-    </div>
-        <div class="nav-links">
-           
-            <a href="/admin">Admin</a>
-            <a href="/dashboard">Dashboard</a>
-            <a href="/login">Login</a>
-        </div>
+    <div class="background"></div>
+<div class="header">  
+    <h1>Health Record Management</h1>  
+    <!-- <button class="reg"><a href="/register">Register</a></button>   -->
+    <div style="display: flex; align-items: center;">  
+        <% if (user) { %>  
+            <button type="button" class="user-btn" style="font-size: 18px; border: none; background: none; cursor: default;">  
+                <%= user.username %> <!-- Display the username -->  
+            </button>  
+            <i class="fas fa-user" style="margin-left: 10px;"></i>  
+        <% } else { %>  
+            <span class="register-btn">login</span>  
+            <i class="fas fa-user" style="margin:10px;"></i>  
+        <% } %>  
+    </div>  
+</div>  
 
-        <div class="content">
-            <h2>Your Health Data <br>in One Place</h2>
-        </div>
+<div class="nav-links">
+    <a href="/about" id="about-link">About</a>
+    <a href="/admin">Admin</a>
+   
+    <a href="/dashboard">Dashboard</a>
+    <% if (user) { %>
+        <form action="/logout" method="POST" style="display: inline;">
+            <button type="submit" class="btn">Log out</button>
+        </form>
+    <% } else { %>
+    <a href="/login">Login</a>
+    <% } %>
+</div>
+
+<div class="content">
+    <h2>
+        <span style="color: rgb(91, 159, 205); font-size:50px;">Stay</span> Safe , <span style="color: rgb(91, 159, 205);font-size:50px;">Stay</span> healthy <br>Care for you
+    </h2>
+</div>
+
+
+<div class="about" id="about-section">
+    <h2>About Health Record Management System</h2>
+    <p>The Health Record Management System is a robust web application designed to streamline the management of patient data and enhance the efficiency of healthcare administration. The goal of this Health Record Management System is to simplify the process of recording and accessing patient data for healthcare providers, ensuring that critical medical information is always at their fingertips. The system aims to improve data accuracy, reduce paperwork, and provide a centralized platform for better management of patient information.</p>
+</div>
+
+<script>
+   
+    document.getElementById('about-link').addEventListener('click', function(e) {
+        e.preventDefault();  // Prevent the default anchor action
+        var aboutSection = document.getElementById('about-section');
+        
        
+        aboutSection.classList.toggle('show');
+    });
+
+</script>
+
 </body>
 </html>

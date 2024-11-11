@@ -39,19 +39,20 @@
             background-color: #62b3d0;  
             color: white;  
         }  
-        .delete-button {  
-            background-color: #e74c3c;  
+        .appoint-button {  
+            background-color: #3ce7ab;  
             color: white;  
             border: none;  
             padding: 5px 10px;  
             cursor: pointer;  
             border-radius: 5px;  
         }  
-        .delete-button:hover {  
-            background-color: #c0392b;  
+        .appoint-button:hover {  
+            background-color: #1a5036;  
         }  
     </style>  
 </head>  
+
 <body>  
     <div class="header">  
         <h1>Admin Panel</h1>  
@@ -67,18 +68,28 @@
                 </tr>  
             </thead>  
             <tbody>  
-                <% users.forEach(user => { %>  
+                <% if (users && users.length > 0) { %>  
+                    <% users.forEach(user => { %>  
+                        <tr>  
+                            <td><%= user.name || 'N/A' %></td> <!-- Added fallback for missing name -->
+                            <td><%= user.email || 'N/A' %></td> <!-- Added fallback for missing email -->
+                            <td>  
+                                <form action="/admin/user/<%= user._id %>" method="POST" onsubmit="return confirm('You');">  
+                                    <button type="submit" class="appoint-button">Appointment</button>  
+                                    <input type="hidden" name="_method" value="PUT">  
+                                </form>  
+                                  <!-- Button to view health records of the user -->
+                                  <form action="/admin/healthrecord/<%= user._id %>" method="GET">
+                                    <button type="submit" class="view-button">View Health Record</button>
+                                </form>  
+                            </td>  
+                        </tr>  
+                    <% }); %>  
+                <% } else { %>  
                     <tr>  
-                        <td><%= user.name %></td>  
-                        <td><%= user.email %></td>  
-                        <td>  
-                            <form action="/admin/user/<%= user._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">  
-                                <button type="submit" class="delete-button">Delete</button>  
-                                <input type="hidden" name="_method" value="DELETE">  
-                            </form>  
-                        </td>  
+                        <td colspan="3" style="text-align: center; color: #888;">No users found.</td>  
                     </tr>  
-                <% }); %>  
+                <% } %>  
             </tbody>  
         </table>  
     </div>  

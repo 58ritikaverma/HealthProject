@@ -6,6 +6,9 @@ const patientSchema = new mongoose.Schema({
     gender: { type: String, required: true },
     symptoms: { type: String, required: true },
     dateOfVisit: { type: Date, required:true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
+},{
+    timestamps: true
     // username: { type: String, required: false}
 });
 const Patient = mongoose.model('Patient', patientSchema);

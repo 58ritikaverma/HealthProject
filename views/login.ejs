@@ -64,8 +64,7 @@ margin-bottom: 20px;
         }
        body{
         background-image: url('/images/healthCare.webp');
-        background-size: 100% 740px;
-        
+        background-size: cover;
        }
 
     </style>
@@ -75,13 +74,21 @@ margin-bottom: 20px;
     <div class="con1">
 
     <div class="container">
+        <% if (user) { %>
+            <h2>Welcome, <%= user.name %>!</h2>
+            <form action="/logout" method="POST">
+                <button type="submit" class="btn">Logout</button>
+            </form>
+        <% } else { %>
         <h2>Login</h2>
         <form action="/login" method="POST">
             <input type="text" class="user" name="username" placeholder="Username" required>
             <input type="password" class="pass" name="password" placeholder="Password" required>
             <button type="submit" class="btn">Login</button>
         </form>
+        
         <p>Don't have an account? <a href="/register">Register here</a></p>
+        <% } %>
     </div>
 </div>
 </body>
