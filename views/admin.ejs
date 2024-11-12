@@ -53,10 +53,10 @@
     </style>  
 </head>  
 
-<body>  
-    <div class="header">  
-        <h1>Admin Panel</h1>  
-    </div>  
+ <body>  
+    <!-- <div class="header">  
+        <h1>Admin Panel</h1>   -->
+    <!-- </div>  
     <div class="table-container">  
         <h2>User Records</h2>  
         <table>  
@@ -70,16 +70,62 @@
             <tbody>  
                 <% if (users && users.length > 0) { %>  
                     <% users.forEach(user => { %>  
-                        <tr>  
-                            <td><%= user.name || 'N/A' %></td> <!-- Added fallback for missing name -->
-                            <td><%= user.email || 'N/A' %></td> <!-- Added fallback for missing email -->
-                            <td>  
+                        <tr>   -->
+                            <!-- <td><%= user.name || 'N/A' %></td> 
+                             Added fallback for missing name -->
+                           <!--<td><%= user.email || 'N/A' %></td>--> <!-- Added fallback for missing email -->
+                            <!-- <td>  
                                 <form action="/admin/user/<%= user._id %>" method="POST" onsubmit="return confirm('You');">  
                                     <button type="submit" class="appoint-button">Appointment</button>  
                                     <input type="hidden" name="_method" value="PUT">  
-                                </form>  
+                                </form>   -->
                                   <!-- Button to view health records of the user -->
-                                  <form action="/admin/healthrecord/<%= user._id %>" method="GET">
+                                  <!-- <form action="/admin/healthrecord/<%= user._id %>" method="GET">
+                                    <button type="submit" class="view-button">View Health Record</button>
+                                </form>  
+                            </td>  
+                        </tr>   -->
+                    <!-- <% }); %>  
+                <% } else { %>   -->
+                    <!-- <tr>  
+                        <td colspan="3" style="text-align: center; color: #888;">No users found.</td>  
+                    </tr>  
+                <% } %>  
+            </tbody>  
+        </table>  
+    </div>   -->
+
+    <!-- ------------- -->
+    <div class="header">  
+        <h1>Admin Panel</h1>  
+    </div>  
+    <div class="table-container">  
+        <h2>User Records</h2>  
+        <table>  
+            <thead>  
+                <tr>  
+                    <th>Name</th>  
+                    <th>Email</th>  
+                    <th>Appointment Status</th> <!-- New column for appointment status -->
+                    <th>Actions</th>  
+                </tr>  
+            </thead>  
+            <tbody>  
+                <% if (users && users.length > 0) { %>  
+                    <% users.forEach(user => { %>  
+                        <tr>  
+                            <td><%= user.name || 'N/A' %></td> <!-- Added fallback for missing name -->
+                            <td><%= user.email || 'N/A' %></td> <!-- Added fallback for missing email -->
+                            <td class="<%= user.appointmentStatus === 'Cancelled' ? 'status-cancelled' : 'status-active' %>">
+                                <%= user.appointmentStatus || 'Active' %>
+                            </td> <!-- Display status and set class for styling -->
+                            <td>  
+                                <form action="/admin/user/<%= user._id %>" method="POST" onsubmit="return confirm('Are you sure you want to modify this appointment?');">  
+                                    <button type="submit" class="appoint-button">Modify Appointment</button>  
+                                    <input type="hidden" name="_method" value="PUT">  
+                                </form>  
+                                <!-- Button to view health records of the user -->
+                                <form action="/admin/healthrecord/<%= user._id %>" method="GET">
                                     <button type="submit" class="view-button">View Health Record</button>
                                 </form>  
                             </td>  
@@ -87,11 +133,11 @@
                     <% }); %>  
                 <% } else { %>  
                     <tr>  
-                        <td colspan="3" style="text-align: center; color: #888;">No users found.</td>  
+                        <td colspan="4" style="text-align: center; color: #888;">No users found.</td>  
                     </tr>  
                 <% } %>  
             </tbody>  
         </table>  
-    </div>  
-</body>  
+    </div> 
+</body>   
 </html>

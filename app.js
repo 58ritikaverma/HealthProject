@@ -22,7 +22,7 @@ app.use(session({
     cookie: { secure: false }
 }));
 app.use(express.static('public'));
- app.use(adminRoutes);
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -47,7 +47,7 @@ mongoose.connect('mongodb://localhost:27017/healthRecordDB', {
 app.use(patientRoutes);
 app.use(authRoutes);
 app.use(loginRoutes);
-
+app.use(adminRoutes);
 
 
 

@@ -109,27 +109,27 @@ router.get('/admin/healthrecord/:userId' ,checkAdmin, async (req, res) => {
 
 
 
-// router.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     // Find the user by email and verify the password
-//     try{
-//     const user = await User.findOne({ email });
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    // Find the user by email and verify the password
+    try{
+    const user = await User.findOne({ email });
 
-//     if (user && user.password === password) { // Replace with proper password hashing check
-//         req.session.user = {
-//             _id: user._id,
-//             isAdmin: user.isAdmin // Ensure this property exists in the User model
-//         };
-//         console.log('User session set:', req.session.user);
-//         return res.redirect('/admin');
-//     } else {
-//         return res.status(401).send('Invalid credentials');
-//     }
-// }catch(error){
-//     console.error('Login error:', error);
-//     res.status(500).send('Internal Server Error');
-// }
+    if (user && user.password === password) { // Replace with proper password hashing check
+        req.session.user = {
+            _id: user._id,
+            isAdmin: user.isAdmin // Ensure this property exists in the User model
+        };
+        console.log('User session set:', req.session.user);
+        return res.redirect('/admin');
+    } else {
+        return res.status(401).send('Invalid credentials');
+    }
+}catch(error){
+    console.error('Login error:', error);
+    res.status(500).send('Internal Server Error');
+}
 
-// });
+});
 
 module.exports = router;
