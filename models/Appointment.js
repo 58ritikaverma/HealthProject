@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 // Define the Appointment schema
 const appointmentSchema = new mongoose.Schema({
-    userId: { 
+    // userId: {
+        patientId: {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User', // Reference to the User model
         required: true 
@@ -17,9 +18,11 @@ const appointmentSchema = new mongoose.Schema({
     },
     notes: { 
         type: String, 
-        required: false 
+        default:''
+        // required: false 
     }
-}, { timestamps: true }); // Automatically adds 'createdAt' and 'updatedAt' fields
+});
+// }, { timestamps: true }); // Automatically adds 'createdAt' and 'updatedAt' fields
 
 // Create the Appointment model
 const Appointment = mongoose.model('Appointment', appointmentSchema);

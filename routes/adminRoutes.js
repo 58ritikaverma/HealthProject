@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/User'); // Ensure the path to your User model is correct
+const Patient = require('../models/Patient');
 const Appointment = require('../models/Appointment');
 const HealthRecord = require('../models/HealthRecord'); 
 const router = express.Router();
@@ -12,24 +13,68 @@ function checkAdmin(req, res, next) {
     return res.status(403).send('Unauthorized access'); // Deny access if not an admin
 }
 
+// Route to get all patients
+router.get('/patients', async (req, res) => {
+    try {
+        const patients = await Patient.find();
+        res.json(patients);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve patients' });
+    }
+});
+// Route to get a specific patient by ID
+router.get('/patients/:id', async (req, res) => {
+    try {
+        const patient = await Patient.findById(req.params.id);
+        if (!patient) {
+            return res.status(404).json({ error: 'Patient not found' });
+        }
+        res.json(patient);
+    } catch (err) {
+        res.status(500).json({ error: 'Error fetching patient' });
+    }
+});
+// Route to get appointments for a patient
+router.get('/appointments/:patientId', async (req, res) => {
+    try {
+        const appointments = await Appointment.find({ patientId: req.params.patientId });
+        res.json(appointments);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve appointments' });
+    }
+});
+// Route to get health records for a patient
+router.get('/health-records/:patientId', async (req, res) => {
+    try {
+        const records = await HealthRecord.find({ patientId: req.params.patientId });
+        res.json(records);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve health records' });
+    }
+});
+
 // Route to create an appointment for a user
 router.post('/admin/appointment', checkAdmin, async (req, res) => {
     const { userId, date, doctor, notes } = req.body;
 
     try {
         const appointment = new Appointment({
-            userId,
-            date,
-            doctor,
-            notes
+            // userId,
+            // date,
+            // doctor,
+            // notes
+            patientId: req.params.patientId
         });
-
-        await appointment.save(); // Save the appointment in the database
-        res.status(201).send('Appointment created successfully');
-    } catch (error) {
-        console.error('Error creating appointment:', error);
-        res.status(500).send('Error creating appointment');
+        res.json(appointments);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve appointments' });
     }
+    //     await appointment.save(); // Save the appointment in the database
+    //     res.status(201).send('Appointment created successfully');
+    // } catch (error) {
+    //     console.error('Error creating appointment:', error);
+    //     res.status(500).send('Error creating appointment');
+    // }
 });
 
 
@@ -90,46 +135,55 @@ router.delete('/admin/user/:id', checkAdmin, async (req, res) => {
 });
 
 // Route to view health record of a user
-router.get('/admin/healthrecord/:userId' ,checkAdmin, async (req, res) => {
+// router.get('/admin/healthrecord/:userId' ,checkAdmin, async (req, res) => {
+//     try {
+//         const user = await User.findById(req.params.userId);
+//         if (!user) {
+//             return res.status(404).send('User not found');
+//         }
+//         const healthRecord = await HealthRecord.findOne({ userId: user._id });
+//         if (!healthRecord) {
+//             return res.status(404).send('Health record not found');
+//         }
+//         res.render('healthRecordView', { user, healthRecord });
+//     } catch (error) {
+//         console.error('Error fetching health record:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// }); pending to check
+
+// Route to get health records for a patient
+router.get('/health-records/:patientId', async (req, res) => {
     try {
-        const user = await User.findById(req.params.userId);
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-        const healthRecord = await HealthRecord.findOne({ userId: user._id });
-        if (!healthRecord) {
-            return res.status(404).send('Health record not found');
-        }
-        res.render('healthRecordView', { user, healthRecord });
-    } catch (error) {
-        console.error('Error fetching health record:', error);
-        res.status(500).send('Internal Server Error');
+        const records = await HealthRecord.find({ patientId: req.params.patientId });
+        res.json(records);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to retrieve health records' });
     }
 });
 
 
+// router.post('/login', async (req, res) => {
+//     const { email, password } = req.body;
+//     // Find the user by email and verify the password
+//     try{
+//     const user = await User.findOne({ email });
 
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    // Find the user by email and verify the password
-    try{
-    const user = await User.findOne({ email });
+//     if (user && user.password === password) { // Replace with proper password hashing check
+//         req.session.user = {
+//             _id: user._id,
+//             isAdmin: user.isAdmin // Ensure this property exists in the User model
+//         };
+//         console.log('User session set:', req.session.user);
+//         return res.redirect('/admin');
+//     } else {
+//         return res.status(401).send('Invalid credentials');
+//     }
+// }catch(error){
+//     console.error('Login error:', error);
+//     res.status(500).send('Internal Server Error');
+// }
 
-    if (user && user.password === password) { // Replace with proper password hashing check
-        req.session.user = {
-            _id: user._id,
-            isAdmin: user.isAdmin // Ensure this property exists in the User model
-        };
-        console.log('User session set:', req.session.user);
-        return res.redirect('/admin');
-    } else {
-        return res.status(401).send('Invalid credentials');
-    }
-}catch(error){
-    console.error('Login error:', error);
-    res.status(500).send('Internal Server Error');
-}
-
-});
+// });  pending to check
 
 module.exports = router;

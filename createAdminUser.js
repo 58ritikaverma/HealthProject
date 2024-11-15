@@ -4,35 +4,26 @@ const User = require('./models/User'); // Ensure the path is correct
 require('dotenv').config(); // Load environment variables from .env file  
 
 // Connect to the database using the URI from environment variables  
-const mongoUri = process.env.MONGODB_URI; // Access the MongoDB URI  
-const adminPassword = process.env.ADMIN_PASSWORD;
-if (!mongoUri || !adminPassword) {  
-    console.error('MONGODB_URI and ADMIN_PASSWORD must be defined in the .env file');  
-    process.exit(1);  
-}  
-
-mongoose.connect(mongoUri, {  
-    useNewUrlParser: true,  
-    useUnifiedTopology: true,  
-}).then(() => {  
-    console.log('Connected to MongoDB');  
-}).catch(err => {  
-    console.error('Error connecting to MongoDB:', err);  
-});  
+const mongoUri = 'mongodb://localhost:27017/yourdbname'; // Access the MongoDB URI  
+const adminUsername='admin';
+const adminPassword = 'admin@123';
 
 async function createAdminUser() {  
     try {  
-        // Check if an admin user already exists  
+        // Connecting to the database  
+        await mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });  
+        console.log('Connected to MongoDB');  
+
         const existingAdmin = await User.findOne({ isAdmin: true });  
         if (existingAdmin) {  
             console.log('Admin user already exists');  
             return;  
         }  
 
-        // Hash the password from environment variables  
-        const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10); // Use the password from .env  
+        const hashedPassword = await bcrypt.hash(adminPassword, 10); // Hash the password  
+
         const adminUser = new User({  
-            username: 'admin',  
+            username: adminUsername, // Use the variable directly  
             password: hashedPassword,  
             isAdmin: true,  
         });  
@@ -46,5 +37,9 @@ async function createAdminUser() {
     }  
 }  
 
-// Run the function  
+// Check if the necessary environment variable is defined  
+if (!mongoUri || !adminPassword) {  
+    console.error('MONGODB_URI and ADMIN_PASSWORD must be defined');  
+    process.exit(1);  
+}  
 createAdminUser();
