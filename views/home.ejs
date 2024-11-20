@@ -17,16 +17,18 @@
         }
 
         .background {
-            background: url('/images/benefits-of-a-hospital-management-system-removebg-preview.png');
+            background: url('/images/frontImg.png'); 
             background-size: cover; 
             opacity: 0.9;
           
            background-position: center;  
-           width: 50%;  
-           height: 500px; 
-           margin-top: 20px; 
+            width: 50%;  
+          
+           height: 400px; 
+           margin-top: 5px; 
            margin-bottom: 80px;
            position: absolute;  
+          
            top: 170px; 
            left: 10%;
            z-index: -1;
@@ -159,14 +161,15 @@
          .about {
             background-color: #c5ddf1;
             padding: 50px;
-            margin:70px 10px;
+            margin:90px 20px;
             margin-top: 250px;
             margin-bottom: 250px;
             display: none; 
-            transition: transform 0.6s ease-in;
-            transform: translateY(0); /* Position off-screen initially */
+            transition: transform 0.2s ease-in;
+            transform: translateY(0);
+             /* Position off-screen initially */
             /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
-            border-radius: 10px;
+             border-radius: 20px; 
         } 
 
         /* .about.show {
@@ -265,13 +268,21 @@
         #about-section.show {  
             display: block; /* Show when class is added */
         } 
+        .card {  
+            background-color: #e5f1f3;   
+            border-radius: 10px;   
+            padding: 20px;   
+            margin: 10px; /* Ensure this has sufficient margin */  
+            width: 300px; /* Explicit width for consistency */  
+            text-align: center;   
+        }
         .cards-container {  
             display: flex;  
             justify-content: space-around;  
             flex-wrap: wrap;  
             margin-top: 20px; 
             /* Space from the about section */  
-            margin-bottom: 200px;
+            margin-bottom: 80px;
         }  
         .elementContainer.elementCounter-num{
             display: flex;
@@ -282,6 +293,12 @@
         .elementCounter-num{
             color: #1B6592;
         }
+        .sp-testimonial-client-image{
+            margin: 0 0 22px 0;
+
+}
+
+
         
       
     </style>
@@ -375,6 +392,26 @@
         </div>  
     </div>  
 </section>  
+
+
+<section class="customer-reviews" style="text-align: center; padding: 40px 20px; background: linear-gradient(to bottom, #f4fafe, #ffffff);margin:20px;">  
+            <h2 style="font-size: 36px; font-weight: bold;">Read What Our Customers Say</h2>  
+            <div class="review" style="margin: 20px auto; max-width: 600px; background-color: #f9f9f9; border-radius: 20px; padding: 20px;">  
+                <div class="star-rating" style="color: #ffcc00; font-size: 24px;">  
+                    ★ ★ ★ ★ ★  
+                </div>  
+                <!-- <img src="/images/doctor-icon.png" alt="Customer" style="border-radius: 50%; width: 60px; height: 60px; margin: 10px 0;">   -->
+                <div class="sp-testimonial-client-image"> 
+                    <img loading="lazy" decoding="async" width="120"
+                    height="120" src="https://docpulse.com/wp-content/uploads/2020/01/doctor_img.png" class="tfree-client-image wp-post-image" alt="doctor icon">
+                    </div>
+                <p style="font-style: italic;">"The Health Record Management System has transformed how we handle patient data. It's user-friendly and efficient!"</p>  
+                "</p>  
+                <h4 style="margin: 10px 0;">Dr.abc</h4>  
+                <p style="margin: 0;"> Vivekananda Kendra Bina Refinery Hospital</p>  
+            </div>  
+            <!-- Additional reviews can be added here -->  
+        </section>
 <script>
    
       document.getElementById('about-link').addEventListener('click', function(e) {
