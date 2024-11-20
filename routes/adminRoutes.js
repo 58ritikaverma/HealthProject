@@ -7,9 +7,11 @@ const router = express.Router();
 
 // Middleware to check if the user is authenticated and is an admin
 function checkAdmin(req, res, next) {
+    console.log('Session:', req.session); // Log session to debug
        if (req.session.user && req.session.user.isAdmin) {
         return next(); // User is authenticated and is an admin, proceed to the next middleware or route handler
     }
+    console.log('Unauthorized access attempt');
     return res.status(403).send('Unauthorized access'); // Deny access if not an admin
 }
 
@@ -64,6 +66,7 @@ router.post('/admin/appointment', checkAdmin, async (req, res) => {
             // doctor,
             // notes
             patientId: req.params.patientId
+           
         });
         res.json(appointments);
     } catch (err) {
@@ -103,6 +106,8 @@ router.post('/admin/healthrecord', checkAdmin, async (req, res) => {
 // Route to display all users (Admin Panel)
 router.get('/admin',checkAdmin, async (req, res) => {
     // Check if the user is authenticated and has admin privileges
+    console.log('Session data:', req.session);
+    console.log('User data:', req.session.user);
     try {
         const users = await User.find();
         res.render('admin', { users });
@@ -163,27 +168,27 @@ router.get('/health-records/:patientId', async (req, res) => {
 });
 
 
-// router.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     // Find the user by email and verify the password
-//     try{
-//     const user = await User.findOne({ email });
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    // Find the user by email and verify the password
+    try{
+    const user = await User.findOne({ email });
 
-//     if (user && user.password === password) { // Replace with proper password hashing check
-//         req.session.user = {
-//             _id: user._id,
-//             isAdmin: user.isAdmin // Ensure this property exists in the User model
-//         };
-//         console.log('User session set:', req.session.user);
-//         return res.redirect('/admin');
-//     } else {
-//         return res.status(401).send('Invalid credentials');
-//     }
-// }catch(error){
-//     console.error('Login error:', error);
-//     res.status(500).send('Internal Server Error');
-// }
+    if (user && user.password === password) { // Replace with proper password hashing check
+        req.session.user = {
+            _id: user._id,
+            isAdmin: user.isAdmin // Ensure this property exists in the User model
+        };
+        console.log('User session set:', req.session.user);
+        return res.redirect('/admin');
+    } else {
+        return res.status(401).send('Invalid credentials');
+    }
+}catch(error){
+    console.error('Login error:', error);
+    res.status(500).send('Internal Server Error');
+}
 
-// });  pending to check
+});  
 
 module.exports = router;

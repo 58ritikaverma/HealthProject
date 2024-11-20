@@ -25,6 +25,7 @@
            width: 50%;  
            height: 500px; 
            margin-top: 20px; 
+           margin-bottom: 80px;
            position: absolute;  
            top: 170px; 
            left: 10%;
@@ -34,7 +35,7 @@
         .header {
             background-color: #74b6ce;
             color: rgb(230, 235, 245);
-            padding: 5px 0;
+            padding: 20px 0;
             text-align: center;
             padding: 20px;
             display: flex;
@@ -155,26 +156,27 @@
         }
 
         /* Styling for the About Section */
-        .about {
+         .about {
             background-color: #c5ddf1;
             padding: 50px;
             margin:70px 10px;
             margin-top: 250px;
+            margin-bottom: 250px;
             display: none; 
             transition: transform 0.6s ease-in;
             transform: translateY(0); /* Position off-screen initially */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
             border-radius: 10px;
-        }
+        } 
 
-        .about.show {
+        /* .about.show {
             display: block;
            /* padding:40px;
             text-align: justify;
             font-size: 1.5rem;*/
           
-            /* transform: translateY(0);  */
-        }
+            /* transform: translateY(0);  
+        }*/
         .about p {
             font-size: 1.2rem;
             letter-spacing: 0.05em; 
@@ -213,7 +215,75 @@
         
 
         }
-       
+        .diamond {
+            background: #caefff;
+            padding: 20px 0;
+            position: relative;
+            min-height: 290px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+        .diamond-box-container {
+            grid-row-gap: 110px;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+        }
+        .elementor-element .elementor-widget-container {
+            transition: background .3s, border .3s, 
+            border-radius .3s, box-shadow .3s, transform var(--e-transform-transition-duration, .4s);
+        }
+        .elementor-widget-wrap>.elementor-element {
+            width: 100%;
+        }
+        .elementor:not(.elementor-bc-flex-widget) .elementor-widget-wrap {
+            display: flex;
+        }
+        .elementor-widget-wrap {
+            position: relative;
+            width: 100%;
+            flex-wrap: wrap;
+            align-content: flex-start;
+        }
+        .p1 {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            unicode-bidi: isolate;
+        }
+        #about-section {  
+            display:none;  
+            padding: 20px;  
+            border: 1px solid #ccc;  
+            margin-top: 10px;  
+            background-color: #e7f1f8; /* Light background for visibility */  
+        }  
+        #about-section.show {  
+            display: block; /* Show when class is added */
+        } 
+        .cards-container {  
+            display: flex;  
+            justify-content: space-around;  
+            flex-wrap: wrap;  
+            margin-top: 20px; 
+            /* Space from the about section */  
+            margin-bottom: 200px;
+        }  
+        .elementContainer.elementCounter-num{
+            display: flex;
+            font-size: 69px;
+            font-weight: 600;
+            line-height: 1;
+        }
+        .elementCounter-num{
+            color: #1B6592;
+        }
+        
+      
     </style>
 </head>
 <body>
@@ -235,7 +305,8 @@
 </div>  
 
 <div class="nav-links">
-    <a href="/about" id="about-link">About</a>
+    <!-- <a href="/about" id="about-link">About</a> -->
+    <a href="#" id="about-link">About</a>
     <a href="/admin">Admin</a>
    
     <a href="/dashboard">Dashboard</a>
@@ -262,15 +333,57 @@
     <p>The Health Record Management System is a robust web application designed to streamline the management of patient data and enhance the efficiency of healthcare administration. The goal of this Health Record Management System is to simplify the process of recording and accessing patient data for healthcare providers, ensuring that critical medical information is always at their fingertips. The system aims to improve data accuracy, reduce paperwork, and provide a centralized platform for better management of patient information.</p>
 </div>
 
+ <section class="s1">  
+    <div class="elementor-element elementor-element-populated">  
+        <div class="elementor-widget-container">  
+            <div class="cards-container" style="display: flex; justify-content: space-around; flex-wrap: wrap;">  
+                <div class="card" style="background-color: #e5f1f3; border-radius: 40px; padding: 20px; margin: 10px; width: 300px; text-align: center;">  
+                    <img loading="lazy" decoding="async" src="/images/healthcareSol.png" width="60" height="60">  
+                    <strong>Complete Healthcare Solution</strong>  
+                    <p>"Fully integrated modular software architecture with seamless data flow between departments for effortless patient data management."</p>  
+                </div>  
+                <div class="card" style="background-color: #e5f1f3; border-radius: 40px; padding: 20px; margin: 10px; width: 300px; text-align: center;">  
+                    <img loading="lazy" decoding="async" src="/images/secureReliable.png" width="60" height="60">  
+                    <strong>Secure And Reliable</strong>  
+                    <p>"Robust security protocols and data privacy policy safeguards customer data, ensuring confidentiality without any data commercialization."</p>  
+                </div>  
+                <div class="card" style="background-color: #e5f1f3; border-radius: 40px; padding: 20px; margin: 10px; width: 300px; text-align: center;">  
+                    <img loading="lazy" decoding="async" src="/images/patientCentric.png" width="60" height="60">  
+                    <strong>Patient-Centric Design</strong>  
+                    <p>"24/7 appointment booking, instant notifications, feedback tools, and telemedicine platforms for higher patient engagement."</p>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+</section>
+
+ 
+<section class="s2" style="text-align: center; padding: 40px 20px; background: linear-gradient(to bottom, #d3edf9, #ffffff);">  
+    <h2 style="font-size: 36px; font-weight: bold;">HIPAA Cloud Hosted, Trusted, Provider Focused Platform</h2>  
+    <div class="elementContainer" style="display: flex; justify-content: space-around; margin-top: 20px;margin-bottom:50px;">  
+        <div style="flex: 1; text-align: center;">  
+            <span style="font-size: 40px; font-weight: bold; color:#4e9dc2;">3,000 +</span><br>  
+            Doctors and growing!  
+        </div>  
+        <div style="flex: 1; text-align: center;">  
+            <span style="font-size: 40px; font-weight: bold; color:#4e9dc2">300 +</span><br>  
+            Clients (India, Middle East)  
+        </div>  
+        <div style="flex: 1; text-align: center;">  
+            <span style="font-size: 40px; font-weight: bold; color:#4e9dc2">5M +</span><br>  
+            Appointments/Records Handled Annually  
+        </div>  
+    </div>  
+</section>  
 <script>
    
-    document.getElementById('about-link').addEventListener('click', function(e) {
+      document.getElementById('about-link').addEventListener('click', function(e) {
         e.preventDefault();  // Prevent the default anchor action
         var aboutSection = document.getElementById('about-section');
         
        
         aboutSection.classList.toggle('show');
-    });
+    });  
 
 </script>
 

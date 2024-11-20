@@ -17,20 +17,20 @@ router.post('/login', async (req, res) => {
             console.log('User not found for email:', email);
             return res.status(401).send('Invalid credentials'); // User not found
         }
-    //     if (user && await bcrypt.compare(password, user.password)) {
+//         if (user && await bcrypt.compare(password, user.password)) {
             
-    //         req.session.user = { id: user._id, email: user.email };
+//             req.session.user = { id: user._id, email: user.email,  isAdmin: user.isAdmin, };
 
             
-    //         return res.redirect('/dashboard');
-    //     } else {
+//             return res.redirect('/dashboard');
+//         } else {
             
-    //         return res.status(401).send('Invalid credentials');
-    //     }
-    // } catch (err) {
-    //     console.error('Error logging in user:', err);
-    //     res.status(500).send('Internal Server Error');
-    // }
+//             return res.status(401).send('Invalid credentials');
+//         }
+//     } catch (err) {
+//         console.error('Error logging in user:', err);
+//         res.status(500).send('Internal Server Error');
+//     }
 
 // });
  // Verify the password using bcrypt
@@ -50,7 +50,12 @@ router.post('/login', async (req, res) => {
  console.log('User logged in successfully:', req.session.user);
 
  // Redirect to the appropriate dashboard or admin page
- return res.redirect('/admin'); // Adjust this route if needed
+//  return res.redirect('/admin'); // Adjust this route if needed
+if (user.isAdmin) {
+    return res.redirect('/admin'); // Redirect to admin page if admin
+} else {
+    return res.redirect('/dashboard'); // Redirect to user dashboard
+}
 } catch (err) {
  console.error('Error logging in user:', err);
  res.status(500).send('Internal Server Error');

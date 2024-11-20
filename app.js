@@ -13,14 +13,17 @@ const User = require('./models/User');
 const Patient = require('./models/Patient');
 
 const app = express();
+app.use(express.static('public')); // add
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
     secret: 'mysecret',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: { secure: false} // isko false kra tabhi login chal paya
 }));
+ 
+ 
 app.use(express.static('public'));
 
 
@@ -74,30 +77,53 @@ app.get('/dashboard', async (req, res) => {
     } else {  
         res.redirect('/login');  
     }  
-});  
+}); 
+// yha se check karna h 
 app.post('/login', async (req, res) => {  
     const { email, password } = req.body;  
+ 
     const user = await User.findOne({ email });  
-    
-    // if (user && await bcrypt.compare(password, user.password)) { // Use bcrypt to hash/check passwords  
-    //     req.session.user = user;  
-    //     res.redirect('/dashboard');  
-    // } else {  
-    //     res.send('Invalid credentials');  
-    // }  
+    // const user = getUserByUsername(email); // Get user from DB or a predefined se
     if (user && user.password === password) { // Replace with hashed password check
         req.session.user = {
             id: user._id,
-            isAdmin: user.isAdmin // Ensure this field exists in your User model
+            email:user.email,
+            isAdmin: user.isAdmin || false, // Ensure this field exists in your User model
         };
-        return res.redirect('/admin');
+        console.log("Session after login:", req.session.user);
+        // return res.redirect('/admin');
+        return user.isAdmin ? res.redirect('/admin') : res.redirect('/dashboard');
+        // if (user.isAdmin) {
+        //     return res.redirect('/admin'); // Redirect admin users to the admin panel
+        // }
+        // return res.redirect('/dashboard'); 
     }
-
+    console.log('Invalid login attempt'); // Debug invalid login
     res.status(401).send('Invalid credentials');
 }); 
+// I add this currently
 app.get('/register', (req, res) => {
     res.render('register'); 
 });
+app.post('/register', async (req, res) => {  
+    const { email, password } = req.body;  
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash password  
+
+    const newUser = new User({  
+        email,  
+        password: hashedPassword,  
+        // any other user properties  
+    });  
+
+    try {  
+        await newUser.save(); // Save user in database  
+        res.redirect('/login'); // Redirect to login  
+    } catch (error) {  
+        res.status(500).send('Error registering user');  
+    }  
+});
+
+
 app.get('/login', (req, res) => {
     const user = req.session.user; // Assuming user info is stored in the session
     res.render('login', { user }); // Pass user data to the template
@@ -135,31 +161,52 @@ app.get('/home', (req, res) => {
 
 
 app.get('/admin', async (req, res) => { 
-   
+    console.log("Session data on /admin:",req.session.user);
+    if (req.session.user && req.session.user.isAdmin) {
     try {  
         const users = await User.find();  
-        res.render('admin', { users }); 
+        return res.render('admin', { users }); 
     } catch(error) {  
         res.status(500).send('Server Error');  
     }  
+}else{
+    console.log('Unauthorized admin access attempt');
+    res.status(403).send("Unauthorized access");
+    res.redirect('/login');
+}
 }); 
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
 });
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.redirect('/dashboard');
+        }
+        res.clearCookie('connect.sid'); // Make sure to clear the session cookie
+        res.redirect('/home');
+    });
+});
+
 
 app.delete('/admin/user/:id', async (req, res) => {  
     
     try {  
         await User.findByIdAndDelete(req.params.id);  
         res.status(200).send('User deleted successfully');  
-    } catch (error) {  
+    } catch (error) { 
+        console.error('Error deleting user:', err); 
         res.status(500).send('Error deleting user');  
     }  
 });  
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
+app.get('/admin', (req, res) => {
+    console.log('Admin route accessed');
+    res.send('Debugging admin route'); // Temporary response for debugging
+});
 app.listen(3000, ()=> {
     console.log('Server is running on port 3000');
 });
