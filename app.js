@@ -10,6 +10,7 @@ const patientRoutes = require('./routes/patientRoutes');
 const loginRoutes = require('./routes/loginRoute'); 
 const adminRoutes = require('./routes/adminRoutes');
 const User = require('./models/User');
+const path = require('path'); 
 const Patient = require('./models/Patient');
 
 const app = express();
@@ -52,7 +53,7 @@ app.use(authRoutes);
 app.use(loginRoutes);
 app.use(adminRoutes);
 
-
+// app.use('/', require('./routes/adminRoutes'));
 
 app.get('/', (req, res) => {
     res.redirect('/home');
@@ -207,6 +208,41 @@ app.get('/admin', (req, res) => {
     console.log('Admin route accessed');
     res.send('Debugging admin route'); // Temporary response for debugging
 });
+// Route for admin login
+app.get('/admin/login', (req, res) => {
+    res.render('adminLogin'); // Ensure adminLogin.ejs exists
+});
+// Post route for admin login
+app.post('/admin/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (user && user.password === password && user.isAdmin) { // Replace password comparison with bcrypt in production
+            req.session.user = {
+                _id: user._id,
+                email: user.email,
+                isAdmin: true,
+            };
+            return res.redirect('/admin'); // Redirect admin to admin panel
+        } else {
+            return res.status(401).send('Invalid admin credentials');
+        }
+    } catch (error) {
+        console.error('Admin login error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// Route for general user login
+app.get('/login', (req, res) => {
+    res.render('login'); // Ensure login.ejs exists
+});
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 app.listen(3000, ()=> {
     console.log('Server is running on port 3000');
 });

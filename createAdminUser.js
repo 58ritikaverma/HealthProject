@@ -6,6 +6,7 @@ require('dotenv').config(); // Load environment variables from .env file
 // Connect to the database using the URI from environment variables  
 const mongoUri = 'mongodb://localhost:27017/yourdbname'; // Access the MongoDB URI  
 const adminUsername='admin';
+const adminEmail = 'admin@gmail.com';
 const adminPassword = 'admin@123';
 
 async function createAdminUser() {  
@@ -14,7 +15,8 @@ async function createAdminUser() {
         await mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });  
         console.log('Connected to MongoDB');  
 
-        const existingAdmin = await User.findOne({ isAdmin: true });  
+        // const existingAdmin = await User.findOne({ isAdmin: true }); 
+        const existingAdmin = await User.findOne({ email: adminEmail }); 
         if (existingAdmin) {  
             console.log('Admin user already exists');  
             return;  
@@ -24,6 +26,7 @@ async function createAdminUser() {
 
         const adminUser = new User({  
             username: adminUsername, // Use the variable directly  
+            email: 'admin@gmail.com',
             password: hashedPassword,  
             isAdmin: true,  
         });  
