@@ -1,74 +1,68 @@
 const express = require('express');
 const User = require('../models/User');
 const Patient = require('../models/Patient');
-const Appointment = require('../models/Appointment');
-const HealthRecord = require('../models/HealthRecord');
+const bcrypt = require('bcrypt');
+// const Appointment = require('../models/Appointment');
+// const HealthRecord = require('../models/HealthRecord');
 const router = express.Router();
 
-// Middleware to check if user is authenticated and is an admin
-// function checkAdmin(req, res, next) {
-// if (req.session.user && req.session.user.isAdmin) {
-//     console.log("Authorized admin access:", req.session.user);
-//         return next();
-//     }
-//     console.log('Unauthorized access attempt',req.session.user);
-//     return res.status(403).send('Unauthorized access');
-// }
 
-// Admin Panel: Display all users
-// router.get('/admin', checkAdmin, async (req, res) => {
-//     try {
-//         const users = await User.find();
-//         res.render('admin', { users }); // Ensure `admin.ejs` or equivalent exists
-//     } catch (error) {
-//         console.error('Error fetching users:', error);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
 // Admin Login Page
 router.get('/admin/login', (req, res) => {
-    if (req.session.user && req.session.user.isAdmin) { //ABHI CHANGE KIYA
+    if (req.session.user && req.session.user.isAdmin) { 
+        console.log('Admin session detected. Redirecting to dashboard.');
         return res.redirect('/admin/dashboard');  // Redirect to the dashboard if logged in as admin
     }
-    res.render('adminLogin'); // Ensure adminLogin.ejs exists
+    console.log('No admin session found. Rendering login page.');
+    res.render('adminLogin'); 
 
 
 });
 // Admin Login Handler
-router.post('/admin/login', async (req, res) => {
+router.post('/admin-login', async (req, res) => {
     const { email, password } = req.body;
 
-    try {
+    console.log("@@@@@@@@@");
+
+     try {
+        console.log("Admin login route hit");
+        // console.log("Received Email:", email, "Received Password:", password);
+        // console.log(email);
+
         const user = await User.findOne({ email });
 
-        if (user && user.isAdmin && await bcrypt.compare(password, user.password)) {
-            req.session.user = {
-                _id: user._id,
-                email: user.email,
-                isAdmin: true,
-                // isAdmin: user.isAdmin,
-            };
-            console.log("Session user:", req.session.user);
-            return res.redirect('/admin');
-        } else {
+        if (!user) {
+            console.log("No user found with email:", email);
             return res.status(401).send('Invalid admin credentials');
         }
-    } catch (error) {
-        console.error('Admin login error:', error);
-        res.status(500).send('Internal Server Error');
+        console.log("User found:", user);  
+        if (!user.isAdmin) {
+            console.log("User is not an admin:", user);
+            return res.status(401).send('Invalid admin credentials');
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            console.log("Password mismatch for email:", email);
+            return res.status(401).send('Invalid adminloginPassword credentials');
+        }
+
+        
+        req.session.user = {
+             id: user._id, 
+             email: user.email, 
+             isAdmin: true,
+             };
+             console.log("Admin login successful for user:", user);
+             return res.status(200).send('admin login successfull');
+        // return res.redirect('/admin');
+    } catch (err) {
+        console.error("Error in admin login route:", err);
+        return res.status(500).send('Internal Server Error');
     }
 });
 
-// Admin Panel: Display all users
-// router.get('/admin', checkAdmin, async (req, res) => {
-//     try {
-//         const users = await User.find();
-//         res.render('admin', { users }); // Ensure `admin.ejs` exists in views
-//     } catch (error) {
-//         console.error('Error fetching users:', error);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
+
 
 // Login Route
 router.post('/login', async (req, res) => {
@@ -80,10 +74,9 @@ router.post('/login', async (req, res) => {
         if (user && user.password === password) { // Replace with proper hashing in production
             req.session.user = {
                 _id: user._id,
-                // email: user.email,
                 username: user.email,
                 isAdmin: true,
-                //    isAdmin: user.isAdmin,
+               
             };
             console.log("Session user:", req.session.user);
             return res.redirect('/admin');
@@ -97,38 +90,22 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Get All Patients
-// router.get('/patients', checkAdmin, async (req, res) => {
-//     try {
-//         const patients = await Patient.find();
-//         res.json(patients);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to retrieve patients' });
-//     }
-// });
+router.get('/admin', async (req, res) => {
+    try {
+        if (!req.session.user || !req.session.user.isAdmin) {  
+            return res.status(403).send('Forbidden');  
+        }  
+        // Fetch doctors (or admins) from the users collection
+        const doctors = await User.find({ isAdmin: true });  // Modify this if you have a 'doctor' field
+        res.render('admin', { doctors });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server Error");
+    }
+});
 
-// Create Appointment
-// router.post('/admin/appointment', checkAdmin, async (req, res) => {
-//     const { patientId, date, doctor, notes } = req.body;
 
-//     try {
-//         const appointment = new Appointment({ patientId, date, doctor, notes });
-//         await appointment.save();
-//         res.status(201).send('Appointment created successfully');
-//     } catch (error) {
-//         console.error('Error creating appointment:', error);
-//         res.status(500).send('Error creating appointment');
-//     }
-// });
 
-// Get Health Records for a Patient
-// router.get('/health-records/:patientId', checkAdmin, async (req, res) => {
-//     try {
-//         const records = await HealthRecord.find({ patientId: req.params.patientId });
-//         res.json(records);
-//     } catch (error) {
-//         res.status(500).json({ error: 'Failed to retrieve health records' });
-//     }
-// });
+
 
 module.exports = router;

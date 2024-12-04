@@ -61,8 +61,7 @@ try{
 
 // Logout Route
 router.get('/logout', (req, res) => {
-    // req.session.destroy();
-    // res.redirect('/login');
+   
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);

@@ -38,10 +38,7 @@ app.use((req, res, next) => {
     next();
 });
 
-mongoose.connect('mongodb://localhost:27017/healthRecordDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
+mongoose.connect('mongodb://localhost:27017/healthRecordDB').then(() => {
     console.log('Connected to MongoDB');
 }).catch((err) => {
     console.log('Error connecting to MongoDB:', err);
@@ -104,7 +101,7 @@ app.post('/register', async (req, res) => {
 
 
 app.get('/login', (req, res) => {
-    const user = req.session.user; // Assuming user info is stored in the session
+    const user = req.session.user; 
     res.render('login', { user }); // Pass user data to the template
 });
 // login for user login
@@ -139,22 +136,6 @@ app.get('/home', (req, res) => {
 });
 
 
-// app.get('/admin', async (req, res) => { 
-//     console.log("Session data on /admin:",req.session.user);
-//     if (req.session.user && req.session.user.isAdmin) {
-//     try {  
-//         const users = await User.find();  
-//         return res.render('admin', { users }); 
-//     } catch(error) { 
-//         console.error('Error fetching users:', error); 
-//         res.status(500).send('Server Error');  
-//     }  
-// }else{
-//     console.log('Unauthorized admin access attempt');
-//     res.status(403).send("Unauthorized access");
-//     res.redirect('/login');
-// }
-// }); 
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
@@ -170,51 +151,20 @@ app.get('/logout', (req, res) => {
 });
 
 
-// app.delete('/admin/user/:id', async (req, res) => {  
-    
-//     try {  
-//         await User.findByIdAndDelete(req.params.id);  
-//         res.status(200).send('User deleted successfully');  
-//     } catch (error) { 
-//         console.error('Error deleting user:', err); 
-//         res.status(500).send('Error deleting user');  
-//     }  
-// });  
+
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 
 
 // Route for admin login
 app.get('/admin/login', (req, res) => {
+    console.log("slkjfkdf****")
     console.log('Admin login route hit');
     res.render('adminLogin'); 
 });
 app.get('/admin', (req, res) => {
     res.redirect('/admin/login'); // Redirect to /admin/login
 });
-// Post route for admin login
-// app.post('/admin/login', async (req, res) => {
-//     const { email, password } = req.body;
-
-//     try {
-//         const user = await User.findOne({ email });
-
-//         // if (user && user.password === password && user.isAdmin) { 
-//          if (user && user.isAdmin && await bcrypt.compare(password, user.password)) {
-//             req.session.user = {
-//                 _id: user._id,
-//                 email: user.email,
-//                 isAdmin: true,
-//             };
-//             return res.redirect('/admin'); // Redirect admin to admin panel
-//         } else {
-//             return res.status(401).send('Invalid admin credentials');
-//         }
-//     } catch (error) {
-//         console.error('Admin login error:', error);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
 
 // Route for general user login
 app.get('/login', (req, res) => {

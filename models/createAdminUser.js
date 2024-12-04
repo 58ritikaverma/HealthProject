@@ -15,19 +15,25 @@ mongoose.connect('mongodb://localhost:27017/healthRecordDB', {
 async function createAdminUser() {
   const email = 'admin@gmail.com'; 
   const password = 'admin123';   
-  const username = 'adminUser'; // Add a username value
-//   try {
+  const username = 'adminUser1'; // Add a username value
+  try {
+     // Check if the username already exists 
+    const existingUser = await User.findOne({ username });  
+    if (existingUser) {  
+    console.log('Username already exists. Please choose a different one.');  
+    return; // Exit the function early to prevent an attempt to save a duplicate  
+}
     // const hashedPassword = await bcrypt.hash(password, 10);
     const hashedPassword = await bcrypt.hash('admin123', 10);
 
     const adminUser = new User({
       name: 'Admin User',
-      username,
+      username:username,
       email :email,
       password: hashedPassword,
       isAdmin: true,
     });
-try{
+// try{
     await adminUser.save();
     console.log('Admin user created successfully');
   } catch (error) {
