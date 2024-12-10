@@ -170,7 +170,11 @@ app.get('/admin', (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login'); // Ensure login.ejs exists
 });
-
+// Route for /admin/medical-history
+app.get('/admin/medical-history', (req, res) => {
+    console.log('Accessing /admin/medical-history');
+    res.render('medicalHistory');  // Render the 'medicalHistory' view
+});
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 

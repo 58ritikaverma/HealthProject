@@ -1,4 +1,7 @@
 
+
+
+<!--  -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,47 +43,37 @@
         a:hover {
             background-color: #206978;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
-        th, td {
-            padding: 12px;
-           background-color: #dbe9ee;
-            text-align: left;
-            border-radius: 8px;
+        .card {
+            background-color: #dbe9ee;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
         }
-        th {
-            background-color:#8cc4f5;
+        .card:hover {
+            transform: translateY(-5px);
+            background-color: #e9f5fa;
+        }
+        .card h3 {
+            margin: 0;
             color: #333;
+            font-size: 1.5rem;
+            font-family: cursive;
         }
-        tr:nth-child(even) {
-            background-color: #a9a7a7;
-        }
-        tr:nth-child(odd) {
-            background-color: #f4f4f4;
-        }
-        tr:hover {
-            background-color: #e9ecef;
-        }
-        .logout-btn {
-            display: inline-block;
-            text-decoration: none;
-            padding: 10px 20px;
-            background-color: #dc3545;
-            color: white;
-            border-radius: 5px;
-        }
-        .logout-btn:hover {
-            background-color: #6b131c;
+        .card p {
+            margin: 10px 0;
+            color: #555;
         }
         .btnn {
-           display: block;
+            display: block;
             width: fit-content;
-           margin: 10px auto;
-            padding: 10px ;
-           
+            margin: 10px auto;
+            padding: 10px;
             color: white;
             border: none;
             border-radius: 5px;
@@ -91,7 +84,12 @@
         }
         .btnn a {
             text-decoration: none;
-           
+        }
+        .welcome {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1rem;
+            color: #333;
         }
     </style>
 </head>
@@ -99,37 +97,27 @@
     <div class="container">
         <h2>Patient List</h2>
         <a href="/patients/add">Add New Patient</a>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Gender</th>
-                <th>Symptoms</th>
-                <th>Date of Visit</th>
-            </tr>
+        <div class="cards-container">
             <% patients.forEach(patient => { %>
-            <tr>
-                <td><%= patient.name ? patient.name:'N/A' %></td>
-                <td><%= patient.age %></td>
-                <td><%= patient.gender %></td>
-                <td><%= patient.symptoms %></td>
-                <td><%= patient.dateOfVisit.toDateString() %></td>
-            </tr>
+            <div class="card">
+                <h3><%= patient.name ? patient.name : 'N/A' %></h3>
+                <p><strong>Age:</strong> <%= patient.age %></p>
+                <p><strong>Gender:</strong> <%= patient.gender %></p>
+                <p><strong>Symptoms:</strong> <%= patient.symptoms %></p>
+                <p><strong>Date of Visit:</strong> <%= patient.dateOfVisit.toDateString() %></p>
+            </div>
             <% }) %>
-           
-<div style="display: flex; align-items: center;">
-    <% if (username ) { %>
-        <span>Welcome, <%= username %></span>
-    <% } else { %>
-        <button class="user-btn">User</button>
-    <% } %>
-</div>
-
-        </table>
-        <!-- <a href="/logout" class="logout-btn">Logout</a> -->
-       <br>
+        </div>
+        <div class="welcome">
+            <% if (username) { %>
+                <span>Welcome, <%= username %></span>
+            <% } else { %>
+                <button class="btnn">User</button>
+            <% } %>
+        </div>
+        <br>
         <button class="btnn"><a href="/home">Back to Home</a></button>
-        
     </div>
 </body>
 </html>
+

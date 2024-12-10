@@ -2,8 +2,7 @@ const express = require('express');
 const User = require('../models/User');
 const Patient = require('../models/Patient');
 const bcrypt = require('bcrypt');
-// const Appointment = require('../models/Appointment');
-// const HealthRecord = require('../models/HealthRecord');
+const MedicalHistory = require('../models/MedicalHistory');
 const router = express.Router();
 
 
@@ -11,18 +10,30 @@ const router = express.Router();
 router.get('/admin/login', (req, res) => {
     if (req.session.user && req.session.user.isAdmin) { 
         console.log('Admin session detected. Redirecting to dashboard.');
-        return res.redirect('/admin/dashboard');  // Redirect to the dashboard if logged in as admin
+        // return res.redirect('/admin/dashboard');  
+        return res.redirect('/admin/medical-history'); 
     }
     console.log('No admin session found. Rendering login page.');
     res.render('adminLogin'); 
 
 
 });
+router.get('/admin-login', async (req, res) => {
+    try {
+        if (!req.session.user || !req.session.user.isAdmin) {
+            return res.redirect('/admin'); // Redirect to admin page
+        }
+    } catch (error) {
+        console.error("Error in GET /admin-login:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
 // Admin Login Handler
 router.post('/admin-login', async (req, res) => {
     const { email, password } = req.body;
 
-    console.log("@@@@@@@@@");
+    // console.log("@@@@@@@@@");
 
      try {
         console.log("Admin login route hit");
@@ -54,8 +65,9 @@ router.post('/admin-login', async (req, res) => {
              isAdmin: true,
              };
              console.log("Admin login successful for user:", user);
-             return res.status(200).send('admin login successfull');
-        // return res.redirect('/admin');
+            //  return res.status(200).send('admin login successfull');
+            return res.redirect('/admin/medical-history');
+        // return res.redirect('/admin-login');// this line is imp for reach
     } catch (err) {
         console.error("Error in admin login route:", err);
         return res.status(500).send('Internal Server Error');
@@ -95,17 +107,52 @@ router.get('/admin', async (req, res) => {
         if (!req.session.user || !req.session.user.isAdmin) {  
             return res.status(403).send('Forbidden');  
         }  
-        // Fetch doctors (or admins) from the users collection
-        const doctors = await User.find({ isAdmin: true });  // Modify this if you have a 'doctor' field
-        res.render('admin', { doctors });
-    } catch (err) {
-        console.error(err);
+         const medicalHistories = await MedicalHistory.find(); 
+
+    res.render('admin', { medicalHistories });
+     } catch (err) {
+        console.error("Error in /admin route:",err);
         res.status(500).send("Server Error");
     }
 });
+router.get('/admin/medical-history', async (req, res) => {
+    try {
+        if (!req.session.user || !req.session.user.isAdmin) {
+            return res.status(403).send('Access Denied');
+        }
 
+        // Fetch all medical records
+        const records = await MedicalHistory.find({});
+        
+        // Render the medical history page and pass the records
+        res.render('medicalHistory', { records });
+    } catch (err) {
+        console.error("Error fetching medical history:", err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+// router.get('/admin/medical-history', (req, res) => {
+//     console.log('Accessing /admin/medical-history');
+//     if (!req.session.user || !req.session.user.isAdmin) {
+//         return res.status(403).send('Access Denied');
+//     }
+//     // Fetch records from MongoDB
+//     MedicalHistory.find({}, (err, records) => {
+//         if (err) {
+//             console.error('Error fetching records:', err);
+//             return res.status(500).send('Error fetching records');
+//         }
 
+//         // Render the view and pass the records
+//         res.render('medicalHistory', { records });
+//     });
+// });
 
+// Your route for /admin/medical-history
+router.get('/admin/medical-history', (req, res) => {
+    console.log('Accessing /admin/medical-history');
+    res.render('medicalHistory');  // This is the view you want to render
+});
 
 
 module.exports = router;
