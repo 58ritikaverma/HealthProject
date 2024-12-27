@@ -158,7 +158,7 @@ app.use(methodOverride('_method'));
 
 // Route for admin login
 app.get('/admin/login', (req, res) => {
-    console.log("slkjfkdf****")
+  //  console.log("slkjfkdf****")
     console.log('Admin login route hit');
     res.render('adminLogin'); 
 });
